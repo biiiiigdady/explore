@@ -1,0 +1,13 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+
+cc_library(
+    name = "hello",
+    srcs = ["hello.cpp"],
+    hdrs = ["hello.hpp"]
+)
+
+cc_binary(
+    name="app",
+    srcs=["main.cpp"],
+    deps=[":hello"]
+)

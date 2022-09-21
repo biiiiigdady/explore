@@ -1,6 +1,6 @@
 # cs-explore
 
-## 介绍
+## Description
 explore computer science and technology
 
 ## topic
