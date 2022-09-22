@@ -10,3 +10,5 @@ explore computer science and technology
 ### pull request
 
 ### 测试 GCM
+
+### 测试 gpg 加密 commit
