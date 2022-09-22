@@ -10,5 +10,3 @@ explore computer science and technology
 ### pull request
 
 ### 测试 GCM
-
-### commit with sign
