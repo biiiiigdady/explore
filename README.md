@@ -7,6 +7,6 @@ explore computer science and technology
 
 ### object file
 
-### pull request 测试
+### pull request
 
 ### 测试 GCM
