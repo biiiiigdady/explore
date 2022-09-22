@@ -12,3 +12,5 @@ explore computer science and technology
 ### 测试 GCM
 
 ### 测试 gpg 加密 commit
+
+### 测试 切换用户
