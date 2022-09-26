@@ -1,4 +1,4 @@
-# cs-explore
+# Explore everything
 
 ## 介绍
 explore computer science and technology
