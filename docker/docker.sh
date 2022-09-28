@@ -42,18 +42,19 @@ group="$(id -g -n)"
 gid="$(id -g)"
 
 function mount_user_disk() {
-set -x
+    set -x
     num=$(mount | grep "/mnt/${user}" | wc -l)
     if [ $num == '0' ];then
         if [ -f "/mnt/disk/${user}.img" ];then
             mount /mnt/disk/${user}.img /mnt/${user}
-	    chown -R ${new_usr}:auto /mnt/${new_usr}
-	    chmod 700 /mnt/${new_usr}
-	fi
+	        chown -R ${new_usr}:auto /mnt/${new_usr}
+	        chmod 700 /mnt/${new_usr}
+	    fi
     fi
 }
 
 function docker_run() {
+    
     ssh_port=$((50000 + $uid))
     if [ ${DEV_CONTAINER} == "horizon_dev_${USER}-${DEV_IMAGE_16}" ];then
         ssh_port=$((ssh_port + 5000))
@@ -73,11 +74,11 @@ function docker_run() {
         -e TERM="xterm-256color" \
         --hostname "${DEV_INSIDE}" \
         -v /dev/null:/dev/raw1394 \
-        -v /mnt/${user}:/home/${user} \
-	-w /home/${user} \
-	-p ${ssh_port}:22 \
-	--memory 12g \
-	--memory-swap=16g \
+        -v /data/${user}:/home/${user} \
+	    -w /home/${user} \
+	    -p ${ssh_port}:22 \
+	    --memory 12g \
+	    --memory-swap=16g \
         ${DEV_IMAGE} \
         /bin/bash
 
@@ -90,24 +91,24 @@ function docker_run() {
 function main() {
     if [ $# -eq 1 ];then
     	if [ "$1" == "-h" ];then
-		info "Command \"docker_start\" to start a container."
-		info "Usage:"
-		info "	docker_start or docker_start $image_name"
-		info "	docker_start is same \"docker_start ${DEV_IMAGE}\""
-		info "	only support base on \"${DEV_IMAGE}\", \"${DEV_IMAGE_16}\""
-		docker images
-		exit 0;
-	fi
+		    info "Command \"docker_start\" to start a container."
+		    info "Usage:"
+		    info "	docker_start or docker_start $image_name"
+            info "	docker_start is same \"docker_start ${DEV_IMAGE}\""
+            info "	only support base on \"${DEV_IMAGE}\", \"${DEV_IMAGE_16}\""
+            docker images
+            exit 0;
+	    fi
         docker images |grep "$1" -w
-	if [ $? -eq 0 ];then
+        if [ $? -eq 0 ];then
             DEV_IMAGE=${1}
             DEV_CONTAINER=${DEV_CONTAINER}-${DEV_IMAGE}
-	else
+        else
             error "Not exist this docker image:$1"
             info "help: docker_start docker_image_name"
-	    info "$(docker images)"
-	    exit 1
-	fi
+            info "$(docker images)"
+            exit 1
+        fi
     fi
 
     info "Docker container checking \"${DEV_CONTAINER}\" ..."
@@ -115,27 +116,27 @@ function main() {
     #container alive?
     if [ $? -ne 0 ];then
     	#exist container?
-	docker ps -a | grep -w "${DEV_CONTAINER}$"
+	    docker ps -a | grep -w "${DEV_CONTAINER}$"
     	if [ $? -eq 0 ];then
             info "Activating container \"${DEV_CONTAINER}\"..."
             docker start "$DEV_CONTAINER"
             #start ssh service first#
             docker exec ${DEV_CONTAINER} /bin/bash -c "service ssh start"
-	else
-	    docker_run
-	fi
+	    else
+	        docker_run
+	    fi
     fi
 
 
     info "Starting docker container \"${DEV_CONTAINER}\" ..."
     docker exec ${DEV_CONTAINER} /bin/bash -c "id -u $user"
     if [ $? -ne 0 ];then
-            info "Adding docker user \"${user}\",uid:\"${uid}\",default passwd: \"${DEF_PASSWD}\""
+        info "Adding docker user \"${user}\",uid:\"${uid}\",default passwd: \"${DEF_PASSWD}\""
 	    docker exec ${DEV_CONTAINER} /bin/bash -c "useradd ${user} -u ${uid} -p '${DEF_PASSWD}' && echo '${user}:${DEF_PASSWD}'| chpasswd"
 	    docker exec ${DEV_CONTAINER} /bin/bash -c "echo \"${user} ALL=(ALL) ALL\" >> /etc/sudoers"
 	    docker exec ${DEV_CONTAINER} /bin/bash -c "usermod -s /bin/bash ${user}"
-            #start ssh service first#
-            docker exec ${DEV_CONTAINER} /bin/bash -c "service ssh start"
+        #start ssh service first#
+        docker exec ${DEV_CONTAINER} /bin/bash -c "service ssh start"
     fi
     #workaround after move docker to /mnt#
     docker exec ${DEV_CONTAINER} /bin/bash -c "chmod +s /usr/bin/sudo"

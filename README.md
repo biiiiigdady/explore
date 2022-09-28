@@ -1,16 +1,7 @@
-# Explore everything
+# 探索未知
+
+*何谓**未知**，相对而言之。*
 
 ## 介绍
-explore computer science and technology
 
-## topic
-
-### test object file
-
-### pull request
-
-### 测试 GCM
-
-### 测试 gpg 加密 commit
-
-### test merge op during pull request
+- 探索计算机科学中的理论和技术

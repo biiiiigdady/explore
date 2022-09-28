@@ -1,10 +1,7 @@
-# cs-explore
+# Explore the unknown
 
-## Description
-explore computer science and technology
+***unknown** is a relative concepts.*
 
-## topic
+## Introduction
 
-### object file
-
-### pull-request test
+- computer science therory and technology.
