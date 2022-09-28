@@ -1,9 +1,0 @@
-# ninja log v5
-1	32	1663319394	CMakeFiles/pb.dir/pb.cpp.o	6a0c9cbe29452f2d
-1	33	1663319394	CMakeFiles/pa.dir/pa.cpp.o	922d1479d68be9be
-0	311	1663319395	CMakeFiles/ie.dir/interface_example.cpp.o	8fd12308548d4ff6
-1	323	1663319395	CMakeFiles/ied.dir/interface_example.cpp.o	ed07b537052acebb
-324	386	1663319395	libied.so	6770a708ef141867
-313	387	1663319395	libie.so	25180d9192dc900d
-388	434	1663319395	pa	e5e323ab141f2bd8
-388	439	1663319395	pb	6619036973f53b30
